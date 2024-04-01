@@ -44,8 +44,6 @@ async def start(message: types.Message, state: FSMContext ):
         for i in is_user_lang:
             language = i[2]
         if language == 'en' or language == 'uz' or language == 'ru':
-            for i in language:
-                language = i[2]
             language_file = get_language_file(language)
             if is_user_member == []:
                 await message.answer(language_file["start"], reply_markup=await category_lang(message.from_user.id))
@@ -70,8 +68,6 @@ async def get_number(message: types.Message, state : FSMContext):
             language = 'ru'
         else :
             language = 'uz'
-        for i in language:
-            language = i[2] 
         language_file = get_language_file(language)
         try:
             is_user_lang = await db.select_lang(telegram_id=int(message.from_user.id))
@@ -104,7 +100,7 @@ async def get_main_goal(msg : types.Message):
     finally:
         await db.close_pool()
     for i in language:
-        language = i[2]
+            language = i[2]
     language_file = get_language_file(language)
     if msg.text == 'Anonim foydalanuvchi' or msg.text == "Anonymous user" or msg.text == "Анонимный пользователь" or msg.text == '/anonim_message':
         await msg.answer(language_file['anonim'], reply_markup=ReplyKeyboardRemove())
