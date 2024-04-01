@@ -16,6 +16,8 @@ def load_language(file_path):
     
 def get_language_file(language_code):
     os.chdir(os.path.dirname(__file__))
+    for i in language_code:
+        language_code = i[2]
     if language_code == 'ru':
         return load_language('ru.json')
     elif language_code == 'uz':
