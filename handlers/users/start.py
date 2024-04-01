@@ -69,7 +69,7 @@ async def get_number(message: types.Message, state : FSMContext):
         elif message.text == '🇷🇺Русский':
             language = 'ru'
         else :
-            language = 'uz' 
+            language = 'uz'
         language_file = get_language_file(language)
         try:
             is_user_lang = await db.select_lang(telegram_id=int(message.from_user.id))
@@ -101,6 +101,8 @@ async def get_main_goal(msg : types.Message):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+            language = i[2]
     language_file = get_language_file(language)
     if msg.text == 'Anonim foydalanuvchi' or msg.text == "Anonymous user" or msg.text == "Анонимный пользователь" or msg.text == '/anonim_message':
         await msg.answer(language_file['anonim'], reply_markup=ReplyKeyboardRemove())
@@ -163,6 +165,8 @@ async def get_anonim_goal(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await msg.answer(language_file["anonim_last"])
     await state.finish()
@@ -176,6 +180,8 @@ async def get_number(message: types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = message.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await state.update_data(
         {"phone_number": number['phone_number']}
@@ -190,6 +196,8 @@ async def get_full_name(message: types.Message, state: FSMContext):
         language = await db.select_lang(telegram_id = message.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await state.update_data(
         {'name' : message.text}
@@ -212,6 +220,8 @@ async def get_course(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await state.update_data(
         {'course' : msg.text}
@@ -247,6 +257,8 @@ async def get_group(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)        
     if genius == 1:        
         await msg.answer(language_file["other"], reply_markup=ReplyKeyboardRemove())
@@ -300,6 +312,8 @@ async def get_group(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await msg.answer(language_file["student_last"])
     await state.finish()
@@ -312,6 +326,8 @@ async def get_department(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     try:
         departments = await db.select_department_all()
@@ -377,6 +393,8 @@ async def get_teacher_goal(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await msg.answer(language_file["student_last"])
     await state.finish()
@@ -422,6 +440,8 @@ async def get_other_goal(msg : types.Message, state : FSMContext):
         language = await db.select_lang(telegram_id = msg.from_user.id)
     finally:
         await db.close_pool()
+    for i in language:
+        language = i[2]
     language_file = get_language_file(language)
     await msg.answer(language_file["student_last"])
     await state.finish()
