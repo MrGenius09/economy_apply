@@ -77,7 +77,7 @@ async def get_send_excel(msg : types.Message, state : FSMContext):
 #add group excel
 @dp.message_handler(content_types=ContentType.DOCUMENT, user_id=ADMINS)
 async def get_group_excel(msg = types.Message):
-    if msg.document.mime_type == 'application/vnd.oasis.opendocument.spreadsheet':
+    if msg.document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         file = await bot.get_file(msg.document.file_id)
         file_path = file.file_path
         await bot.download_file(file_path, 'file.xlsx')
