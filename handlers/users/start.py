@@ -443,32 +443,3 @@ async def get_other_goal(msg : types.Message, state : FSMContext):
     language_file = get_language_file(language)
     await msg.answer(language_file["student_last"])
     await state.finish()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

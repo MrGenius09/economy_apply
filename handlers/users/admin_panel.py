@@ -7,8 +7,8 @@ from aiogram.dispatcher import FSMContext
 from pathlib import Path
 from states.all_states import AddCourse, Department, DeleteGroup, DeleteDepartment
 import pandas as pd
-from datetime import datetime
-import os 
+from datetime import datetime 
+import os
 
 #add group
 @dp.message_handler(Command("addgroup", prefixes="?/"), user_id=ADMINS)
@@ -78,14 +78,15 @@ async def get_send_excel(msg : types.Message, state : FSMContext):
 #add group excel
 @dp.message_handler(content_types=ContentType.DOCUMENT, user_id=ADMINS)
 async def get_group_excel(msg = types.Message):
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.dirname(__file__)) 
     if msg.document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         file = await bot.get_file(msg.document.file_id)
         file_path = file.file_path
         await bot.download_file(file_path, 'file.xlsx')
-        print('++++++++++++++++++++++++++++++++++++++++++++++++++')
-
-        df = pd.read_excel('file.xlsx')
+        try:
+            df = pd.read_excel('file.xlsx')
+        except Exception as ex:
+            await msg.answer(str(ex))
         error_list = []
         for index, row in df.iterrows():
             group_id = row['Group_id']
