@@ -7,7 +7,8 @@ from aiogram.dispatcher import FSMContext
 from pathlib import Path
 from states.all_states import AddCourse, Department, DeleteGroup, DeleteDepartment
 import pandas as pd
-from datetime import datetime 
+from datetime import datetime
+import os 
 
 #add group
 @dp.message_handler(Command("addgroup", prefixes="?/"), user_id=ADMINS)
@@ -77,10 +78,12 @@ async def get_send_excel(msg : types.Message, state : FSMContext):
 #add group excel
 @dp.message_handler(content_types=ContentType.DOCUMENT, user_id=ADMINS)
 async def get_group_excel(msg = types.Message):
+    os.chdir(os.path.dirname(__file__))
     if msg.document.mime_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         file = await bot.get_file(msg.document.file_id)
         file_path = file.file_path
         await bot.download_file(file_path, 'file.xlsx')
+        print('++++++++++++++++++++++++++++++++++++++++++++++++++')
 
         df = pd.read_excel('file.xlsx')
         error_list = []
@@ -274,6 +277,7 @@ async def get_delete_group_full(msg:types.Message, state: FSMContext):
 #Statistika olish
 @dp.message_handler(Command("statistics", prefixes="?/"), user_id = ADMINS)
 async def get_statistics(msg: types.Message):
+    os.chdir(os.path.dirname(__file__)) 
     chat_id = msg.from_user.id
     try:
         users = await db.select_user_all()
